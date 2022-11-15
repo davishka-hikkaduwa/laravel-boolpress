@@ -44,6 +44,10 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|min:10|max:50',
             'content' => 'required'
+        ],[
+            'required' => ':attribute is required',
+            'min' => ':attribute must be at least :min characters',
+            'max' => ':attribute must be at most :max characters'
         ]);
 
         $form_data = $request->all();
@@ -95,6 +99,10 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|min:10|max:50',
             'content' => 'required'
+        ],[
+            'required' => ':attribute is required',
+            'min' => ':attribute must be at least :min characters',
+            'max' => ':attribute must be at most :max characters'
         ]);
 
         $form_data = $request->all();
