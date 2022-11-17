@@ -20,6 +20,16 @@
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div>
+            <label for="category_id">Categories: </label>
+            <select name="category_id">
+                <option value="">None</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <div @error('content') class="is-invalid"@enderror>
             <label for="content">Content: </label>
             <textarea name="content" required cols="30" rows="10">{{ old('content', '') }}</textarea>
