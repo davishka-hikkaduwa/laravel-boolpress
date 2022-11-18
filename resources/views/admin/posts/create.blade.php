@@ -9,8 +9,6 @@
         </div>
     @endif
 
-
-
     <form action="{{ route('admin.posts.store') }}" method="post">
         @csrf
         <div @error('title') class="is-invalid"@enderror>
@@ -42,6 +40,15 @@
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
+
+        <div @error('tags') class="is-invalid" @enderror>
+            <label>Tags: </label>
+            @foreach ($tags as $tag)
+                <label>{{ $tag->name }}</label>
+                <input type="checkbox" name="tags[]" value={{ $tag->id }}>
+            @endforeach
+        </div>
+
         <div>
             <input type="submit" value="Create">
         </div>

@@ -2,13 +2,22 @@
 
 @section('content')
     <h1>{{ $post->title }}</h1>
-    <p>{{ $post->content }}</p>
 
     @if ($post->category)
         <p>{{ $post->category->name }}</p>
     @else
         <p>Uncategorized</p>
     @endif
+
+    <p>{{ $post->content }}</p>
+
+    <div class="tags">
+        Tags:
+        @foreach ($post->tags as $tag)
+            <span>{{ $tag->name }}</span>
+        @endforeach
+    </div>
+
 
     <div class="mt-5">
         <a href="{{ route('admin.posts.edit', $post->id) }}">Edit</a>
