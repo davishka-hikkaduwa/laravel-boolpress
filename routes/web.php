@@ -31,7 +31,7 @@ Route::middleware('auth')
     ->prefix('admin')
     ->group(function() {
         Route::get('/', 'HomeController@index')->name('index');
-        Route::resource('posts', 'PostController');
+        Route::resource('posts', 'PostController')->parameters(['posts' => 'post:slug']);
         Route::resource('categories', 'CategoryController');
     });
 
