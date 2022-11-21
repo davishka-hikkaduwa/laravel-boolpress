@@ -4,7 +4,7 @@
     <h1>{{ $post->title }}</h1>
 
     @if ($post->category)
-        <p>{{ $post->category->name }}</p>
+        <p><a href="{{ route('admin.categories.show', $post->category->id) }}">{{ $post->category->name }}</a></p>
     @else
         <p>Uncategorized</p>
     @endif
