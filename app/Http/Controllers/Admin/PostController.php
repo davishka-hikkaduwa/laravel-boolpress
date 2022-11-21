@@ -175,7 +175,7 @@ class PostController extends Controller
             'required' => ':attribute is mandatory',
             'min' => ':attribute should be at least :min chars',
             'max' => ':attribute should have max length of :max chars',
-            'category_id.exists' => 'Category doesn\'t exists anymore :('
+            'category_id.exists' => 'Category doesn\'t exists anymore'
         ]);
     }
 

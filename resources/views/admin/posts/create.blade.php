@@ -18,6 +18,9 @@
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
+
+        {{-- CATEGORIES --}}
+
         <div>
             <label for="category_id">Categories: </label>
             <select name="category_id">
@@ -33,6 +36,8 @@
             @enderror
         </div>
 
+        {{-- CONTENT --}}
+
         <div @error('content') class="is-invalid"@enderror>
             <label for="content">Content: </label>
             <textarea name="content" required cols="30" rows="10">{{ old('content', '') }}</textarea>
@@ -41,11 +46,14 @@
             @enderror
         </div>
 
+        {{-- TAGS --}}
+
         <div @error('tags') class="is-invalid" @enderror>
             <label>Tags: </label>
             @foreach ($tags as $tag)
+                <input {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} type="checkbox" name="tags[]"
+                    value={{ $tag->id }}>
                 <label>{{ $tag->name }}</label>
-                <input type="checkbox" name="tags[]" value={{ $tag->id }}>
             @endforeach
         </div>
 
