@@ -8,6 +8,8 @@ use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class PostController extends Controller
 {
@@ -59,6 +61,13 @@ class PostController extends Controller
 
         $this->validatePost($request);
         $form_data = $request->all();
+
+        if(array_key_exists('image', $form_data)){
+            $cover_path = Storage::put('post_covers', $form_data['image']);
+
+            $form_data['cover_path'] = $cover_path;
+        }
+
         $post = new Post();
         $post->fill($form_data);
 
@@ -171,11 +180,13 @@ class PostController extends Controller
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'exists:tags,id',
+            'image' => 'nullable|image|max:1024'
         ], [
             'required' => ':attribute is mandatory',
             'min' => ':attribute should be at least :min chars',
             'max' => ':attribute should have max length of :max chars',
-            'category_id.exists' => 'Category doesn\'t exists anymore'
+            'category_id.exists' => 'Category doesn\'t exists anymore',
+            'image.max' => ':attribute should be max 1 MB'
         ]);
     }
 

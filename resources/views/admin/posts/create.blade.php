@@ -57,6 +57,13 @@
             @endforeach
         </div>
 
+        {{-- IMAGES --}}
+
+        <div>
+            <label for="image"></label>
+            <input type="file" name="image">
+        </div>
+
         <div>
             <input type="submit" value="Create">
         </div>
