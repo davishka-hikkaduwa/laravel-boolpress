@@ -48,24 +48,13 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
-        // $request->validate([
-        //     'title' => 'required|min:10|max:50',
-        //     'content' => 'required',
-        //     'category_id' =>'nullable|exists:categories,id',
-        // ],[
-        //     'required' => ':attribute is required',
-        //     'min' => ':attribute must be at least :min characters',
-        //     'max' => ':attribute must be at most :max characters',
-        //     'category_id.exists' => 'Category doesn\'t exist anymore',
-        // ]);
-
         $this->validatePost($request);
         $form_data = $request->all();
 
         if(array_key_exists('image', $form_data)){
             $cover_path = Storage::put('post_covers', $form_data['image']);
-
             $form_data['cover_path'] = $cover_path;
+
         }
 
         $post = new Post();
@@ -79,7 +68,7 @@ class PostController extends Controller
             $post->tags()->sync($form_data['tags']);
         }
 
-        return redirect()->route('admin.posts.show', $post->id);
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
@@ -141,8 +130,20 @@ class PostController extends Controller
             $post->tags()->sync([]);
         }
 
+        if(array_key_exists('image', $form_data)){
+
+            if($post->cover_path){
+                Storage::delete($post->cover_path);
+            }
+            $cover_path = Storage::put('post_covers', $form_data['image']);
+            $form_data['cover_path'] = $cover_path;
+        }
+
         $post->update($form_data);
-        return redirect()->route('admin.posts.show', $post->id);
+
+        $slug = $post->slug;
+
+        return redirect()->route('admin.posts.show', $slug);
     }
 
     /**
@@ -155,6 +156,9 @@ class PostController extends Controller
     {
         //
         $post->tags()->sync([]);
+        if($post->cover_path){
+            Storage::delete($post->cover_path);
+        }
         $post->delete();
         return redirect()->route('admin.posts.index');
 
@@ -186,7 +190,7 @@ class PostController extends Controller
             'min' => ':attribute should be at least :min chars',
             'max' => ':attribute should have max length of :max chars',
             'category_id.exists' => 'Category doesn\'t exists anymore',
-            'image.max' => ':attribute should be max 1 MB'
+            'image.max' => 'Image should be max 1 MB'
         ]);
     }
 

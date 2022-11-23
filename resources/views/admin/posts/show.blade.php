@@ -9,6 +9,14 @@
         <p>Uncategorized</p>
     @endif
 
+    <div>
+        @if ($post->cover_path)
+            <img class="img-fluid" src="{{ asset('storage/' . $post->cover_path) }}" alt="{{ $post->title }}" />
+        @else
+            No image...
+        @endif
+    </div>
+
     <p>{{ $post->content }}</p>
 
     <div class="tags">
@@ -20,11 +28,11 @@
 
 
     <div class="mt-5">
-        <a href="{{ route('admin.posts.edit', $post->id) }}">Edit</a>
+        <a href="{{ route('admin.posts.edit', $post->slug) }}">Edit</a>
     </div>
 
     <div class="mt-2">
-        <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+        <form action="{{ route('admin.posts.destroy', $post->slug) }}" method="POST">
             @csrf
             @method('DELETE')
             <input type="submit" value="Delete" onclick="confirm('Are you sure you want to delete this post?')">
