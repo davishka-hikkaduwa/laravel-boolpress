@@ -25,4 +25,11 @@
             <input type="submit" value="DELETE">
         </form>
     </div>
+    <div>
+        @foreach ($tag->posts as $post)
+            <div class="my-2">
+                <a href="{{ route('admin.posts.show', $post->slug) }}">{{ $post->title }}</a>
+            </div>
+        @endforeach
+    </div>
 @endsection

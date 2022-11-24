@@ -111,6 +111,11 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         //
+        $tag->posts()->sync([]);
+
+        $tag->delete();
+
+        return redirect()->route('admin.tags.index', );
     }
 
     private function getSlug($name){
