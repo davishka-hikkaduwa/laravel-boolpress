@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
@@ -47,10 +48,17 @@ class TagController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show($slug)
     {
         //
-        dd($tag);
+        $tag = Tag::where('slug', $slug)->first();
+
+        if(!$tag){
+            abort(404);
+        }
+
+
+        return view('admin.tags.show', compact('tag'));
     }
 
     /**
@@ -74,6 +82,24 @@ class TagController extends Controller
     public function update(Request $request, Tag $tag)
     {
         //
+        $request->validate([
+            'name' => 'required|max:30',
+        ],
+        [
+            'required' => ':attribute is required',
+            'max' => ':attribute should be max :max characters',
+        ]);
+
+        $form_data = $request->all();
+
+        if($tag->name != $form_data['name']){
+            $slug = $this->getSlug($form_data['name']);
+            $form_data['slug'] = $slug;
+        }
+
+        $tag->update($form_data);
+
+        return redirect()->route('admin.tags.show', $tag->slug);
     }
 
     /**
@@ -86,4 +112,22 @@ class TagController extends Controller
     {
         //
     }
+
+    private function getSlug($name){
+        $slug = Str::slug($name);
+        $slug_base = $slug;
+
+        $existingTag = Tag::where('slug', $slug)->first();
+        $counter = 1;
+        while($existingTag){
+            $slug = $slug_base . '_' . $counter;
+            $counter++;
+            $existingTag = Tag::where('slug', $slug)->first();
+        }
+        return $slug;
+    }
+
+
+
+
 }
