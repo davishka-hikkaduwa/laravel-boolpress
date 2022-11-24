@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.posts.store') }}" method="POST">
+    <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div @error('title') class="ac-is-invalid"@enderror>
             <label for="title">Title: </label>

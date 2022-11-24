@@ -108,15 +108,6 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //
-        // $request->validate([
-        //     'title' => 'required|min:10|max:50',
-        //     'content' => 'required'
-        // ],[
-        //     'required' => ':attribute is required',
-        //     'min' => ':attribute must be at least :min characters',
-        //     'max' => ':attribute must be at most :max characters'
-        // ]);
-
         $this->validatePost($request);
         $form_data = $request->all();
         if($post->title != $form_data['title']){
