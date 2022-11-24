@@ -10932,3 +10932,7 @@ a.text-dark:focus {
   }
 }
 
+.dh-is-invalid {
+  border: 2px solid red !important;
+}
+

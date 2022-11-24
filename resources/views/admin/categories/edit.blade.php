@@ -12,7 +12,7 @@
     <form action="{{ route('admin.categories.update', $category->slug) }}" method="POST">
         @csrf
         @method('PUT')
-        <div @error('name') class="ac-is-invalid" @enderror>
+        <div @error('name') class="dh-is-invalid" @enderror>
             <label for="name">Category name:</label>
             <input type="text" name="name" maxlength="30" value="{{ old('name', $category->name) }}">
             @error('name')

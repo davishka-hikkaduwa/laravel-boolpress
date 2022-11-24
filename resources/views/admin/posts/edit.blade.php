@@ -15,7 +15,7 @@
 
         {{-- TITLE --}}
 
-        <div @error('title') class="ac-is-invalid" @enderror>
+        <div @error('title') class="dh-is-invalid" @enderror>
             <label for="title">Title: </label>
             <input type="text" required minlength="10" maxlength="50" name="title"
                 value="{{ old('title', $post->title) }}">
@@ -25,7 +25,7 @@
         </div>
 
         {{-- CATEGORIES --}}
-        <div @error('category_id') class="ac-is-invalid" @enderror>
+        <div @error('category_id') class="dh-is-invalid" @enderror>
             <label for="category_id">Categories: </label>
             <select name="category_id">
                 <option value="">None</option>
@@ -42,7 +42,7 @@
         </div>
 
         {{-- IMG --}}
-        <div @error('image') class="ac-is-invalid" @enderror>
+        <div @error('image') class="dh-is-invalid" @enderror>
             <label for="image">Cover image:</label>
             <input type="file" name="image" />
 
@@ -58,7 +58,7 @@
 
 
         {{-- CONTENT --}}
-        <div @error('content') class="ac-is-invalid"@enderror>
+        <div @error('content') class="dh-is-invalid"@enderror>
             <label for="content">Content: </label>
             <textarea name="content" required cols="30" rows="10">{{ old('content', $post->content) }}</textarea>
             @error('content')
@@ -68,7 +68,7 @@
 
         {{-- TAGS --}}
         @if ($errors->any())
-            <div @error('tags') class="ac-is-invalid" @enderror>
+            <div @error('tags') class="dh-is-invalid" @enderror>
                 <label>Tags: </label>
                 @foreach ($tags as $tag)
                     <input {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} type="checkbox" name="tags[]"

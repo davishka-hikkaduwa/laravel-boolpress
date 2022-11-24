@@ -14,7 +14,7 @@
         @csrf
 
 
-        <div @error('name') class="ac-is-invalid" @enderror>
+        <div @error('name') class="dh-is-invalid" @enderror>
             <label for="name">Category name:</label>
             <input type="text" name="name" maxlength="30" value="{{ old('name', '') }}">
             @error('name')
