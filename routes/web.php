@@ -30,10 +30,14 @@ Route::middleware('auth')
     ->name('admin.')
     ->prefix('admin')
     ->group(function() {
-        Route::get('/', 'HomeController@index')->name('index');
-        Route::resource('posts', 'PostController')->parameters(['posts' => 'post:slug']);
-        Route::resource('categories', 'CategoryController')->parameters(['categories' => 'category:slug']);
-        Route::resource('tags', 'TagController')->parameters(['tags' => 'tag:slug']);
+        Route::get('/', 'HomeController@index')
+            ->name('index');
+        Route::resource('posts', 'PostController')
+            ->parameters(['posts' => 'post:slug']);
+        Route::resource('categories', 'CategoryController')
+            ->parameters(['categories' => 'category:slug']);
+        Route::resource('tags', 'TagController', ['except'=>['create', 'store']])
+            ->parameters(['tags' => 'tag:slug']);
     });
 
 Route::get("{any?}", function(){
